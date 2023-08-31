@@ -1,0 +1,602 @@
+<div class="container mt-2 h5">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" id="navId" role="tablist">
+    <li class="nav-item">
+      <a
+        href="#tab1Id"
+        class="nav-link active"
+        data-bs-toggle="tab"
+        aria-current="page"
+        >Users</a
+      >
+    </li>
+
+    <li class="nav-item" role="presentation">
+      <a href="#tab2Id" class="nav-link" data-bs-toggle="tab">Add user</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a href="#tab3Id" class="nav-link" data-bs-toggle="tab">Donations</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="logout()">Logout</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="tab1Id" role="tabpanel">
+      <div class="container-fluid text-center">
+        <div class="container mt-5">
+          <p class="h2 fw-bold bg-light m-5">Users</p>
+
+          <table class="table p-5">
+            <th>UId</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+
+            <tbody>
+              <tr *ngFor="let i of data; index as index">
+                <td>{{ i.uid }}</td>
+                <td>{{ i.fullName }}</td>
+                <td>{{ i.email }}</td>
+
+                <td>
+                  <button
+                    class="btn btn-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal3"
+                    (click)="edit(index)"
+                  >
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <button class="btn btn-warning" (click)="delete(i.id)">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- {{ data | json }} -->
+    </div>
+    <div class="tab-pane fade m-5" id="tab2Id" role="tabpanel">
+      <form [formGroup]="adduser" (ngSubmit)="submit()">
+        <div class="formGroup">
+          <label for="firstName">firstName:</label>
+          <input
+            type="firstName"
+            name="firstName"
+            id="firstName"
+            class="form-control"
+            formControlName="firstName"
+          />
+          <span
+            *ngIf="
+              !firstName?.valid && (firstName?.touched || firstName?.dirty)
+            "
+            class="text-danger"
+          >
+            <span *ngIf="firstName?.errors?.['required']">
+              *firstName required
+            </span>
+          </span>
+        </div>
+        <div class="formGroup">
+          <label for="middleName">middleName:</label>
+          <input
+            type="middleName"
+            name="middleName"
+            id="middleName"
+            class="form-control"
+            formControlName="middleName"
+          />
+          <span
+            *ngIf="
+              !middleName?.valid && (middleName?.touched || middleName?.dirty)
+            "
+            class="text-danger"
+          >
+            <span *ngIf="middleName?.errors?.['required']">
+              *middleName required
+            </span>
+          </span>
+        </div>
+        <div class="formGroup">
+          <label for="lastName">lastName:</label>
+          <input
+            type="lastName"
+            name="lastName"
+            id="lastName"
+            class="form-control"
+            formControlName="lastName"
+          />
+
+          <span
+            *ngIf="!lastName?.valid && (lastName?.touched || lastName?.dirty)"
+            class="text-danger"
+          >
+            <span *ngIf="lastName?.errors?.['required']">
+              *lastName required
+            </span>
+          </span>
+        </div>
+        <div class="formGroup">
+          <label for="photo">photo:</label>
+          <input
+            type="file"
+            name="photo"
+            id="photo"
+            class="form-control"
+            formControlName="photo"
+          />
+
+          <span
+            *ngIf="!photo?.valid && (photo?.touched || photo?.dirty)"
+            class="text-danger"
+          >
+            <span *ngIf="photo?.errors?.['required']"> *photo required </span>
+          </span>
+        </div>
+        <div class="formGroup">
+          <label for="Email">Email:</label>
+          <input
+            type="email"
+            name="Email"
+            id="Email"
+            class="form-control"
+            formControlName="email"
+          />
+
+          <span
+            *ngIf="!email?.valid && (email?.touched || email?.dirty)"
+            class="text-danger"
+          >
+            <span *ngIf="email?.errors?.['required']"> *email required </span>
+          </span>
+        </div>
+
+        <!-- <div class="formGroup">
+          <label for="password">password:</label>
+          <input
+            type="Password"
+            name="Password"
+            id="Password"
+            class="form-control"
+            formControlName="password"
+          />
+        </div> -->
+
+        <div class="formGroup">
+          <label for="createddate">createddate:</label>
+          <input
+            type="datetime-local"
+            name="createddate"
+            id="createddate"
+            class="form-control"
+            formControlName="createddate"
+          />
+
+          <span
+            *ngIf="
+              !createddate?.valid &&
+              (createddate?.touched || createddate?.dirty)
+            "
+            class="text-danger"
+          >
+            <span *ngIf="createddate?.errors?.['required']">
+              *createddate required
+            </span>
+          </span>
+        </div>
+
+        <div>
+          <p>Address:</p>
+          <div class="formGroup">
+            <label for="flatno">flatno:</label>
+            <input
+              type="flatno"
+              name="flatno"
+              id="flatno"
+              class="form-control"
+              formControlName="flatno"
+            />
+
+            <span
+              *ngIf="!flatno?.valid && (flatno?.touched || flatno?.dirty)"
+              class="text-danger"
+            >
+              <span *ngIf="flatno?.errors?.['required']">
+                *flatno required
+              </span>
+            </span>
+          </div>
+          <div class="formGroup">
+            <label for="area">area:</label>
+            <input
+              type="area"
+              name="area"
+              id="area"
+              class="form-control"
+              formControlName="area"
+            />
+
+            <span
+              *ngIf="!area?.valid && (area?.touched || area?.dirty)"
+              class="text-danger"
+            >
+              <span *ngIf="area?.errors?.['required']"> *area required </span>
+            </span>
+          </div>
+          <div class="formGroup">
+            <label for="state">state:</label>
+            <input
+              type="state"
+              name="state"
+              id="state"
+              class="form-control"
+              formControlName="state"
+            />
+
+            <span
+              *ngIf="!state?.valid && (state?.touched || state?.dirty)"
+              class="text-danger"
+            >
+              <span *ngIf="state?.errors?.['required']"> *state required </span>
+            </span>
+          </div>
+          <div class="formGroup">
+            <label for="city">city:</label>
+            <input
+              type="city"
+              name="city"
+              id="city"
+              class="form-control"
+              formControlName="city"
+            />
+
+            <span
+              *ngIf="!city?.valid && (city?.touched || city?.dirty)"
+              class="text-danger"
+            >
+              <span *ngIf="firstName?.errors?.['required']">
+                *city required
+              </span>
+            </span>
+          </div>
+          <div class="formGroup">
+            <label for="pincode">pincode:</label>
+            <input
+              type="pincode"
+              name="pincode"
+              id="pincode"
+              maxlength="6"
+              class="form-control"
+              formControlName="pincode"
+            />
+
+            <span
+              *ngIf="!pincode?.valid && (pincode?.touched || pincode?.dirty)"
+              class="text-danger"
+            >
+              <span *ngIf="pincode?.errors?.['required']">
+                *pincode required
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-primary w-100">Add user</button>
+      </form>
+    </div>
+    <div class="tab-pane fade" id="tab3Id" role="tabpanel">
+      <div class="m-5 text-center">
+        <p class="h2 fw-bold bg-light m-5">UserList</p>
+
+        <div class="container mt-5">
+          <table class="table p-5">
+            <th>Name</th>
+            <th>Email</th>
+            <th>Donation</th>
+            <th>Donation History</th>
+
+            <tbody *ngFor="let i of data">
+              <tr>
+                <td>{{ i.fullName }}</td>
+                <td>{{ i.email }}</td>
+
+                <td>
+                  <button
+                    class="btn btn-danger"
+                    (click)="c_donation(i.id)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    create Donation Request
+                  </button>
+                </td>
+                <td>
+                  <button
+                    class="btn btn-warning"
+                    (click)="d_donation(i.id)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal2"
+                  >
+                     History
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="tab4Id" role="tabpanel"></div>
+    <div class="tab-pane fade" id="tab5Id" role="tabpanel"></div>
+
+    <!-- modal 1-->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Request for donation
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="donation" (ngSubmit)="donationREQ()">
+              <div class="formGroup">
+                <label for="UID">UserID:</label>
+                <input
+
+                  type="number"
+                  name="UID"
+                  id="UID"
+                  class="form-control"
+                  formControlName="UID"
+
+                />
+              </div>
+              <div class="formGroup">
+                <label for="Month">Month:</label>
+                <input
+                  type="text"
+                  name="Month"
+                  id="Month"
+                  class="form-control"
+                  formControlName="Month"
+                />
+
+                <span
+                  *ngIf="!Month?.valid && (Month?.touched || Month?.dirty)"
+                  class="text-danger"
+                >
+                  <span *ngIf="Month?.errors?.['required']">
+                    *Month required
+                  </span>
+                </span>
+              </div>
+              <div class="formGroup">
+                <label for="Year">Year:</label>
+                <input
+                  type="number"
+                  name="Year"
+                  id="Year"
+                  class="form-control"
+                  formControlName="Year"
+                />
+
+                <span
+                  *ngIf="!Year?.valid && (Year?.touched || Year?.dirty)"
+                  class="text-danger"
+                >
+                  <span *ngIf="Year?.errors?.['required']">
+                    *Year required
+                  </span>
+                </span>
+              </div>
+              <div class="formGroup">
+                <label for="Amount">Amount:</label>
+                <input
+                  type="number"
+                  name="Amount"
+                  id="Amount"
+
+                  class="form-control"
+                  formControlName="Amount"
+                />
+
+                <span
+                  *ngIf="!Amount?.valid && (Amount?.touched || Amount?.dirty)"
+                  class="text-danger"
+                >
+                  <span *ngIf="Amount?.errors?.['required']">
+                    *Amount required
+                  </span>
+                </span>
+              </div>
+              <br />
+              <button
+                type="submit"
+                class="btn btn-primary w-100"
+                data-bs-dismiss="modal"
+              >
+                raise request
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <!-- <button type="submit" class="btn btn-primary">raise request</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal -->
+
+    <!-- modal 2 -->
+    <div
+      class="modal fade"
+      id="exampleModal2"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Collact donation
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <p class="text-center mt-2">sorted in new to old</p>
+          <div class="modal-body" *ngFor="let i of donationcollector_user,index as index">
+            <p>
+              No:{{ index+1 }}
+            </p>
+            <p>
+              Email: <span>{{ i.email }}</span>
+            </p>
+            <p>
+              Month: <span>{{ i.month }}</span>
+            </p>
+            <p>
+              Year: <span>{{ i.year }}</span>
+            </p>
+            <p>
+              Amount: <span>{{ i.amount }}</span>
+            </p>
+            <p>
+              <ng-container *ngIf="i.status==1;else elsepart001">
+              Satus: Paid
+            </ng-container>
+            <ng-template #elsepart001>
+              Satus: Pending
+            </ng-template>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <!-- <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="finalcollect()"
+            >
+              Collect
+            </button> -->
+
+            <!-- <button type="submit" class="btn btn-primary">raise request</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal -->
+
+    <!-- Modal3 -->
+    <div
+      class="modal fade"
+      id="exampleModal3"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Edit details
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="Name">Name</label>
+              <input
+                type="text"
+                name="Name"
+                id="Name"
+                [(ngModel)]="username"
+                class="form-control"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="Email">Email</label>
+              <input
+                type="email"
+                name="Email"
+                id="Email"
+                [(ngModel)]="useremail"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              (click)="editdetails()"
+            >
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- (Optional) - Place this js code after initializing bootstrap.min.js or bootstrap.bundle.min.js -->
+  <script>
+    var triggerEl = document.querySelector("#navId a");
+    bootstrap.Tab.getInstance(triggerEl).show(); // Select tab by name
+  </script>
+</div>
